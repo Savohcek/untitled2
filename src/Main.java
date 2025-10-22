@@ -1,13 +1,37 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+       Scanner in = new Scanner(System.in);
+    System.out.print("Введите сумму:");
+       double a = in.nextDouble();
+    System.out.println("Выберите валюту\n1-Доллар USD\n2-Евро EUR\n3-Тенге KZT\n4-Йена JPY");
+    int x = in.nextInt();
+    double z = 0;
+    if ( x==1) {
+        z = a / 81.35;
+        System.out.printf("Получается Доллара USD: ");
+        System.out.printf("%.2f",z);
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
-  }
+    }
+    if ( x==2) {
+         z = a/94.67;
+        System.out.printf("Получается Евро EUR :");
+        System.out.printf("%.2f",z);
+
+    }
+    if ( x==3) {
+         z = a/0.1512;
+        System.out.printf("Получается Тенге KZT :");
+        System.out.printf("%.2f",z);
+
+    }
+    if ( x==4) {
+         z = a/0.5387;
+        System.out.printf("Получается Йена JPY :");
+        System.out.printf("%.2f",z);
+
+    }
+
+
+
 }
