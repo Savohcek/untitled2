@@ -88,7 +88,7 @@ public class GameState {
 
         if (currentLocation.checkEncounter()) {
             Enemy enemy = currentLocation.getRandomEnemy();
-            System.out.println("\n⚔️ ВНЕЗАПНАЯ ВСТРЕЧА! ⚔️");
+            System.out.println("\n ВНЕЗАПНАЯ ВСТРЕЧА! ");
             System.out.println("На вас нападает " + enemy.getName() + " (Сложность: " +
                     enemy.getDifficulty() + ", Опыт: " + enemy.getExpReward() + ")!");
 
@@ -115,24 +115,24 @@ public class GameState {
     private void findRandomItem() {
         int itemType = random.nextInt(4);
 
-        if (itemType == 0) {
+        if (itemType == 2) {
             int healAmount = 20 + random.nextInt(30);
             player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + healAmount));
-            System.out.println("🍃 Вы нашли лечебное зелье! Восстановлено " + healAmount + " здоровья!");
+            System.out.println(" Вы нашли лечебное зелье! Восстановлено " + healAmount + " здоровья!");
         } else if (itemType == 1) {
             findRandomWeapon();
-        } else if (itemType == 2) {
+        } else if (itemType == 3) {
             int bonusExp = 10 + random.nextInt(20);
             player.addExperience(bonusExp);
-            System.out.println("📚 Вы нашли древний свиток! Получено " + bonusExp + " дополнительного опыта!");
+            System.out.println(" Вы нашли древний свиток! Получено " + bonusExp + " дополнительного опыта!");
         } else {
-            System.out.println("💰 Вы нашли сундук с сокровищами! Но он оказался пуст...");
+            System.out.println(" Вы нашли сундук с сокровищами! Но он оказался пуст...");
         }
     }
 
     private void findRandomWeapon() {
         Weapon newWeapon = new Weapon();
-        System.out.println("\n🎁 ВЫ НАШЛИ НОВОЕ ОРУЖИЕ! 🎁");
+        System.out.println("\n ВЫ НАШЛИ НОВОЕ ОРУЖИЕ! ");
         System.out.println(newWeapon);
 
         System.out.print("Хотите экипировать это оружие? (y/n): ");
@@ -148,7 +148,7 @@ public class GameState {
 
     private BattleResult battleSimulation(Enemy enemy) {
         System.out.println("\n" + "=".repeat(50));
-        System.out.println("⚔️ БОЙ НАЧИНАЕТСЯ! ⚔️");
+        System.out.println(" БОЙ НАЧИНАЕТСЯ! ");
         System.out.println("=".repeat(50));
 
         Knight playerCopy = new Knight(player.getName());
@@ -163,7 +163,6 @@ public class GameState {
         }
 
         // Копируем уровень и опыт через добавление опыта
-        // Это упрощенный способ, в реальной игре нужно скопировать уровень
         for (int i = 1; i < player.getLevel(); i++) {
             playerCopy.addExperience(ExperienceSystem.getExpNeededForLevel(i));
         }
@@ -173,14 +172,14 @@ public class GameState {
 
         while (playerCopy.isAlive() && enemy.isAlive()) {
             System.out.println("\n--- Ход " + turn + " ---");
-            System.out.println("Рыцарь: ❤️ " + playerCopy.getHealth() + "/" + playerCopy.getMaxHealth() +
+            System.out.println("Рыцарь:  " + playerCopy.getHealth() + "/" + playerCopy.getMaxHealth() +
                     " (Ур. " + playerCopy.getLevel() + ")");
-            System.out.println(enemy.getName() + ": ❤️ " + enemy.getHealth() + "/" + enemy.getMaxHealth());
+            System.out.println(enemy.getName() + ":  " + enemy.getHealth() + "/" + enemy.getMaxHealth());
 
             System.out.println("\nВаш ход:");
-            System.out.println("1. ⚔️ Обычная атака");
-            System.out.println("2. 💥 Рыцарский удар (особая способность)");
-            System.out.println("3. 🏃‍♂️ Попытаться сбежать");
+            System.out.println("1. Обычная атака");
+            System.out.println("2. Рыцарский удар (особая способность)");
+            System.out.println("3. Попытаться сбежать");
 
             System.out.print("Выберите действие: ");
             int choice = getIntInput();
@@ -200,12 +199,14 @@ public class GameState {
                 playerCopy.attack(enemy);
                 if (!enemy.isAlive()) {
                     victory = true;
+                    enemy.setHealth(enemy.maxHealth);
                     break;
                 }
             } else if (choice == 2) {
                 playerCopy.specialAttack(enemy);
                 if (!enemy.isAlive()) {
                     victory = true;
+                    enemy.setHealth(enemy.maxHealth);
                     break;
                 }
             }
@@ -224,7 +225,7 @@ public class GameState {
         }
 
         if (victory) {
-            System.out.println("\n✨ ПОБЕДА! ✨");
+            System.out.println("\n ПОБЕДА! ");
             System.out.println("Вы победили " + enemy.getName() + "!");
             System.out.println("Получено опыта: " + enemy.getExpReward());
 
@@ -233,7 +234,7 @@ public class GameState {
 
             return new BattleResult(true, enemy.getExpReward());
         } else {
-            System.out.println("\n💀 ПОРАЖЕНИЕ! 💀");
+            System.out.println("\n ПОРАЖЕНИЕ! ");
             return new BattleResult(false, 0);
         }
     }
